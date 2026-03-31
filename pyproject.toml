@@ -9,7 +9,6 @@ packages = [{ include = "cadbuildr_projects" }]
 [tool.poetry.dependencies]
 python = "^3.10"
 cadbuildr-foundation = "^0.2.4"
-cadbuildr-stdlib = "^0.0.0.2"
 
 
 [tool.poetry.group.dev.dependencies]
