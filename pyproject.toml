@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "cadbuildr-projects-lego"
+version = "0.1.0"
+description = "LEGO-inspired assembly helpers and examples for CADbuildr projects"
+authors = ["CADbuildr Team"]
+readme = "README.md"
+packages = [{ include = "cadbuildr_projects" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+cadbuildr-foundation = "^0.2.4"
+cadbuildr-stdlib = "^0.0.0.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pillow = "^12.1.1"
+cairosvg = "^2.9.0"
+
+[tool.cadbuildr.dependencies]
+cadbuildr-foundation = "^0.2.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
