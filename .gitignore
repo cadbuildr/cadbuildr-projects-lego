@@ -26,3 +26,6 @@ dist/
 .DS_Store
 .idea/
 .vscode/
+
+# github-io (Vite / npm)
+github-io/node_modules/

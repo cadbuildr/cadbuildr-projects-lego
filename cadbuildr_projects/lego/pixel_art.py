@@ -5,7 +5,7 @@ from __future__ import annotations
 from cadbuildr.foundation import Assembly
 
 from .brick import LegoBrick
-from .constants import LEGO_STORE_COLORS, nearest_lego_color_from_hex
+from .constants import LEGO_DIMENSIONS, LEGO_STORE_COLORS, nearest_lego_color_from_hex
 from .interface import LegoInterface
 
 ColorToken = str | None
@@ -77,6 +77,13 @@ def build_lego_matrix(
     # Attach dimensions to the assembly for easy introspection by callers.
     assembly.width = width
     assembly.height = height
+
+    if orientation == "top":
+        pitch = LEGO_DIMENSIONS.stud_pitch
+        cx = width * block_size_studs * pitch / 2.0
+        cy = height * block_size_studs * pitch / 2.0
+        cz = LEGO_DIMENSIONS.plate_height / 2.0
+        assembly.translate([-cx, -cy, -cz])
 
 
 class MatrixLegoArt(Assembly):
