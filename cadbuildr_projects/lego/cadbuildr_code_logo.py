@@ -1,10 +1,8 @@
 """CADbuildr Code CLI banner as a compact stud matrix (B / O) with brand colors.
 
-Layout matches ``py/packages/cadbuildr/code/cadbuildr/code/logo.ans``:
-``B`` ← ``#``, ``O`` ← ``/``, ``.`` ← empty.
+Layout follows the Code CLI ASCII banner: ``B`` ← ``#``, ``O`` ← ``/``, ``.`` ← empty.
 
-Hex colors match ``tsjs/packages/atoms/brand-identity/src/components/Logo/logo_dark.svg``:
-``#40494b`` (outer path) and ``#E87724`` (inner path).
+Brand fills match CADbuildr logo_dark: ``#40494b`` (outer) and ``#E87724`` (inner).
 """
 
 from __future__ import annotations

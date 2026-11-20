@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import random
 
-from cadbuildr.foundation import Circle, Extrusion, Part, Point, Rectangle, Sketch
+from cadbuildr.foundation import Circle, Extrusion, Part, Point, Rectangle, Sketch, make_anchor
 
 from .constants import DEFAULT_LEGO_PALETTE, LEGO_DIMENSIONS
 
@@ -33,6 +33,7 @@ class LegoBrick(Part):
         self._build_inner_cavity()
         self._build_top_studs()
         self._build_inner_tubes()
+        self._add_stud_anchors()
 
         if color is None:
             color = random.choice(DEFAULT_LEGO_PALETTE)
@@ -76,6 +77,14 @@ class LegoBrick(Part):
                         self.brick_height_mm + LEGO_DIMENSIONS.stud_height,
                     )
                 )
+
+    def _add_stud_anchors(self) -> None:
+        """Mating anchors at the brick center: `top` (stud side, +Z out),
+        `bottom` (anti-stud side, mates onto studs), and `seat` (attachment
+        frame at the base, +Z up — for grounding / side-by-side placement)."""
+        self.add_anchor(make_anchor("top", (0.0, 0.0, self.brick_height_mm)))
+        self.add_anchor(make_anchor("bottom", (0.0, 0.0, 0.0), z_down=True))
+        self.add_anchor(make_anchor("seat", (0.0, 0.0, 0.0)))
 
     def _build_inner_tubes(self) -> None:
         sketch = Sketch(self.xy())

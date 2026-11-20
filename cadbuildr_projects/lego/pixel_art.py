@@ -6,7 +6,7 @@ from cadbuildr.foundation import Assembly
 
 from .brick import LegoBrick
 from .constants import LEGO_DIMENSIONS, LEGO_STORE_COLORS, nearest_lego_color_from_hex
-from .interface import LegoInterface
+from .interface import StudInterface
 
 ColorToken = str | None
 ColorMatrix = list[list[ColorToken]]
@@ -40,7 +40,17 @@ def build_lego_matrix(
 
     width = max(len(row) for row in matrix)
     height = len(matrix)
-    interface = LegoInterface()
+    grid_origin = (0.0, 0.0, 0.0)
+    if orientation == "top":
+        # Center the plate on the assembly origin (x, y and plate thickness).
+        pitch = LEGO_DIMENSIONS.stud_pitch
+        # Cells are brick centers, so offset by half a block.
+        grid_origin = (
+            -(width - 1) * block_size_studs * pitch / 2.0,
+            -(height - 1) * block_size_studs * pitch / 2.0,
+            -LEGO_DIMENSIONS.plate_height / 2.0,
+        )
+    studs = StudInterface(assembly, grid_origin=grid_origin)
 
     for y, row in enumerate(matrix):
         for x, color in enumerate(row):
@@ -53,11 +63,13 @@ def build_lego_matrix(
                     short_height=True,
                     color=_resolve_color_token(color),
                 )
-                interface.place(
+                studs.place(
                     piece,
-                    n_x=x * block_size_studs,
-                    n_y=(height - y - 1) * block_size_studs,
-                    n_z=z_level,
+                    at=(
+                        x * block_size_studs,
+                        (height - y - 1) * block_size_studs,
+                        z_level,
+                    ),
                 )
             else:
                 piece = LegoBrick(
@@ -66,24 +78,13 @@ def build_lego_matrix(
                     short_height=False,
                     color=_resolve_color_token(color),
                 )
-                interface.place(
-                    piece,
-                    n_x=x * block_size_studs,
-                    n_y=0,
-                    n_z=z_level + (height - y - 1),
+                studs.place(
+                    piece, at=(x * block_size_studs, 0, z_level + (height - y - 1))
                 )
-    interface.apply(assembly)
 
     # Attach dimensions to the assembly for easy introspection by callers.
     assembly.width = width
     assembly.height = height
-
-    if orientation == "top":
-        pitch = LEGO_DIMENSIONS.stud_pitch
-        cx = width * block_size_studs * pitch / 2.0
-        cy = height * block_size_studs * pitch / 2.0
-        cz = LEGO_DIMENSIONS.plate_height / 2.0
-        assembly.translate([-cx, -cy, -cz])
 
 
 class MatrixLegoArt(Assembly):

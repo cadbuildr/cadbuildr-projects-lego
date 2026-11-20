@@ -1,0 +1,47 @@
+{
+  "description": "One LEGO brick of the chosen footprint and color.",
+  "parameters": [
+    {
+      "default": 2,
+      "id": "n_length",
+      "label": "Length (studs)",
+      "max": 16,
+      "min": 1,
+      "step": 1,
+      "type": "int"
+    },
+    {
+      "default": 2,
+      "id": "n_width",
+      "label": "Width (studs)",
+      "max": 16,
+      "min": 1,
+      "step": 1,
+      "type": "int"
+    },
+    {
+      "choices": [
+        "black",
+        "bright_blue",
+        "bright_green",
+        "bright_orange",
+        "bright_red",
+        "bright_yellow",
+        "coral",
+        "dark_bluish_gray",
+        "lavender",
+        "light_bluish_gray",
+        "medium_azure",
+        "reddish_brown",
+        "tan",
+        "white"
+      ],
+      "default": "bright_red",
+      "id": "brick_color",
+      "label": "Color",
+      "type": "color"
+    }
+  ],
+  "project_id": "lego_brick",
+  "title": "Single LEGO brick"
+}
