@@ -8,11 +8,12 @@ All notable changes to this project are documented in this file.
   places bricks with foundation `RigidJoint`s (`ground`, `on_top_of`, `beside`,
   `place` on an absolute stud grid with `grid_origin`).
 - `LegoFort`, `MatrixLegoArt` / `build_lego_matrix` and `LegoRow` are joint-placed;
-  no more assembly translate for centering. Brick poses are unchanged.
+  no more assembly translate for centering.
 - **Breaking:** removed the grid-translation `LegoInterface`.
 - Parametric `@cadbuildr_project` entry points (`lego_brick`, `lego_fort`,
   `matrix_lego_art`) with emitted parameter schemas.
-- Requires `cadbuildr-foundation ^0.2.16`.
+- `LegoFort` bricks no longer interpenetrate; fort and pixel art are centered on the origin.
+- Requires `cadbuildr-foundation ^0.2.17`.
 
 ## 0.1.0 - 2026-03-30
 

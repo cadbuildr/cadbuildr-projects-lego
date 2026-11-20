@@ -53,6 +53,17 @@ def _checker_color(palette: list[str], layer: int, seq_idx: int) -> str:
     return palette[(layer + seq_idx) % len(palette)]
 
 
+def _fort_place(
+    studs: StudInterface, n_l: int, n_w: int, x: int, y: int, z: int, color: str
+) -> None:
+    """Place an ``n_l`` x ``n_w`` brick whose min corner is stud cell ``(x, y)``.
+
+    The fort layout is computed on brick corners; ``StudInterface.place`` takes
+    brick centers, so shift by half the footprint (footprints are even).
+    """
+    studs.place(LegoBrick(n_l, n_w, color=color), at=(x + n_l // 2, y + n_w // 2, z))
+
+
 def _fort_place_corners(
     studs: StudInterface,
     n_length: int,
@@ -70,10 +81,7 @@ def _fort_place_corners(
             (n_length - 2, n_width - 2),
         )
     ):
-        studs.place(
-            LegoBrick(2, 2, color=_checker_color(palette, z, seq)),
-            at=(nx, ny, z),
-        )
+        _fort_place(studs, 2, 2, nx, ny, z, _checker_color(palette, z, seq))
 
 
 def _fort_fill_horizontal(
@@ -89,17 +97,11 @@ def _fort_fill_horizontal(
     x = x0 + phase
     seq = 0
     while x + 4 <= x1:
-        studs.place(
-            LegoBrick(4, 2, color=_checker_color(palette, z, seq)),
-            at=(x, y, z),
-        )
+        _fort_place(studs, 4, 2, x, y, z, _checker_color(palette, z, seq))
         x += 4
         seq += 1
     if x + 2 <= x1:
-        studs.place(
-            LegoBrick(2, 2, color=_checker_color(palette, z, seq)),
-            at=(x, y, z),
-        )
+        _fort_place(studs, 2, 2, x, y, z, _checker_color(palette, z, seq))
 
 
 def _fort_fill_vertical(
@@ -115,17 +117,11 @@ def _fort_fill_vertical(
     y = y0 + phase
     seq = 0
     while y + 4 <= y1:
-        studs.place(
-            LegoBrick(2, 4, color=_checker_color(palette, z, seq)),
-            at=(x, y, z),
-        )
+        _fort_place(studs, 2, 4, x, y, z, _checker_color(palette, z, seq))
         y += 4
         seq += 1
     if y + 2 <= y1:
-        studs.place(
-            LegoBrick(2, 2, color=_checker_color(palette, z, seq)),
-            at=(x, y, z),
-        )
+        _fort_place(studs, 2, 2, x, y, z, _checker_color(palette, z, seq))
 
 
 class LegoFort(Assembly):

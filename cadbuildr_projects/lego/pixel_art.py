@@ -44,9 +44,10 @@ def build_lego_matrix(
     if orientation == "top":
         # Center the plate on the assembly origin (x, y and plate thickness).
         pitch = LEGO_DIMENSIONS.stud_pitch
+        # Cells are brick centers, so offset by half a block.
         grid_origin = (
-            -width * block_size_studs * pitch / 2.0,
-            -height * block_size_studs * pitch / 2.0,
+            -(width - 1) * block_size_studs * pitch / 2.0,
+            -(height - 1) * block_size_studs * pitch / 2.0,
             -LEGO_DIMENSIONS.plate_height / 2.0,
         )
     studs = StudInterface(assembly, grid_origin=grid_origin)

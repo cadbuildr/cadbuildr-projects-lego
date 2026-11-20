@@ -137,8 +137,22 @@ def test_pixel_art_top_is_centered_by_grid_origin():
     assert art.frame.position == pytest.approx([0.0, 0.0, 0.0])
     assert len(art.joints) == len(art.components) == 3
     xs = sorted({c.frame.position[0] for c in art.components})
-    assert xs == pytest.approx([-PITCH, 0.0])
+    assert xs == pytest.approx([-PITCH / 2, PITCH / 2])  # centered on x=0
     assert all(
         c.frame.position[2] == pytest.approx(-LEGO_DIMENSIONS.plate_height / 2)
         for c in art.components
     )
+
+
+@pytest.mark.parametrize("dims", [(16, 16, 3), (10, 8, 2)])
+def test_fort_bricks_do_not_interpenetrate_and_fort_is_centered(dims):
+    fort = LegoFort(*dims)
+    # Studs seating into the brick above are intended contact.
+    clashes = fort.check_interference(
+        tolerance=LEGO_DIMENSIONS.stud_height + 0.01, include_unknown=False
+    )
+    assert clashes == []
+    xs = [c.frame.position[0] for c in fort.components]
+    ys = [c.frame.position[1] for c in fort.components]
+    assert min(xs) + max(xs) == pytest.approx(0.0)
+    assert min(ys) + max(ys) == pytest.approx(0.0)

@@ -57,12 +57,7 @@ class StudInterface:
 
     def ground(self, brick, at: Sequence[float] = (0.0, 0.0, 0.0)):
         """Fix the first brick with its base center at ``at`` (mm, assembly frame)."""
-        seat = brick.anchor("seat")
-        if any(at):
-            # Grounding the brick's seat shifted by -at puts the seat itself at
-            # +at. TODO(foundation 0.2.17): self.assembly.ground(seat, at=at).
-            seat = seat.offset([-float(v) for v in at], name="grounded_seat")
-        self.assembly.ground(seat)
+        self.assembly.ground(brick.anchor("seat"), at=[float(v) for v in at])
         self._last = brick
         return brick
 

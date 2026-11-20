@@ -30,7 +30,7 @@ show(LegoFort(n_length_studs=16, n_width_studs=16, n_layers=3))
 For layouts on an absolute grid use `studs.place(brick, at=(n_x, n_y, n_z))`;
 `StudInterface(assembly, grid_origin=(x, y, z))` re-centers the whole model.
 
-![LegoFort and pixel art](docs/renders/anchors_before_after.png)
+![LegoFort and pixel art in CADbuildr Prototype](docs/renders/prototype_fort_logo_before_fixed.png)
 
 ## Dependencies
 
