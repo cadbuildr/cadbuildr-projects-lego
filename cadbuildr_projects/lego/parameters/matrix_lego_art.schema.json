@@ -1,0 +1,49 @@
+{
+  "description": "Pixel-art plate driven by a 2D matrix of color names. The matrix is supplied at render time; this project's tunable parameters are the per-pixel size and the fill color used as the empty-cell default.",
+  "parameters": [
+    {
+      "default": 2,
+      "id": "block_size_studs",
+      "label": "Block size (studs)",
+      "max": 4,
+      "min": 1,
+      "step": 1,
+      "type": "int"
+    },
+    {
+      "choices": [
+        "black",
+        "bright_blue",
+        "bright_green",
+        "bright_orange",
+        "bright_red",
+        "bright_yellow",
+        "coral",
+        "dark_bluish_gray",
+        "lavender",
+        "light_bluish_gray",
+        "medium_azure",
+        "reddish_brown",
+        "tan",
+        "white"
+      ],
+      "default": "black",
+      "id": "empty_color",
+      "label": "Empty-cell color",
+      "type": "color"
+    },
+    {
+      "choices": [
+        "solid",
+        "checker"
+      ],
+      "default": "solid",
+      "description": "Solid uses the matrix verbatim; checker treats empty cells specially.",
+      "id": "fill_mode",
+      "label": "Fill mode",
+      "type": "enum"
+    }
+  ],
+  "project_id": "matrix_lego_art",
+  "title": "Matrix LEGO art"
+}
